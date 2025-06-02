@@ -8,8 +8,8 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use('/todos', todoRoutes);
 
+app.use('/todos', todoRoutes);
 
 app.listen(PORT,()=>{
     console.log(`server is running on http://localhost:${PORT}`);
