@@ -19,7 +19,7 @@ function saveTodos(todos) {
 }
 
 // All todos routes
-router.get('/', (req, res) => {
+router.get('/',  (req, res) => {
   const todos = readTodos();
   res.json(todos);
 });
@@ -48,16 +48,19 @@ router.post('/', (req, res) => {
   }
 });
 
-router.put('/:id/completed', (req, res) => {
+router.put('/:id', (req, res) => {
   const todos = readTodos();
   const todo = todos.find(t => t.id === parseInt(req.params.id));
   if (!todo) return res.status(404).send('Todo not found');
   
   // console.log(completed);
   const { completed } = req.body;
-  todos.map((todo)=>{
-    todo.id === parseInt(req.params.id) ? todo.completed = completed : todo
-  })
+  // todos.map((todo)=>{
+  //   todo.id === parseInt(req.params.id) ? todo.completed = completed : todo
+  // })
+
+  todo.completed = completed;
+
   saveTodos(todos);
   res.json(todo);
 });

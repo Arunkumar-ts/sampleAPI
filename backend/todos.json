@@ -14,18 +14,12 @@
   {
     "id": 1748848319289,
     "todoName": "todo3",
-    "completed": false,
+    "completed": true,
     "created_At": "02/06/2025"
   },
   {
     "id": 1748848322137,
     "todoName": "todo4",
-    "completed": false,
-    "created_At": "02/06/2025"
-  },
-  {
-    "id": 1748848325391,
-    "todoName": "todo5",
     "completed": true,
     "created_At": "02/06/2025"
   }

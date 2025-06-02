@@ -1,161 +1,28 @@
-import { useState } from 'react'
 import './App.css'
-import axios from 'axios';
-import {
-  TableRow, Grid, TableContainer, TableHead, TableCell, Paper, Table, TableBody,
-  TextField, Stack, Button, Checkbox, FormControlLabel, FormGroup
-} from '@mui/material';
-import { useEffect } from 'react';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import ProtectedRoute from './routes/ProtectedRoute';
+import Navbar from './componetns/Navbar';
 
 function App() {
 
-  const [rows, setRows] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [todoName, setTodoname] = useState("");
-
-  const getUser = async () => {
-    try {
-      const res = await axios.get("http://localhost:5000/todos");
-      setRows(res.data);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to fetch todos.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const addUser = async () => {
-    try {
-      const res = await axios.post("http://localhost:5000/todos",{todoName}
-      );
-      // console.log(res);
-    }
-    catch (err) {
-      console.log(err);
-    }
-    finally {
-      getUser();
-    }
-  }
-
-  const handleAddNewTodo = () => {
-    if (todoName) {
-      addUser();
-      setTodoname("");
-    }
-    else {
-      alert("Please Enter Name ");
-    }
-  }
-
-  const handleDelete = async (todoId) => {
-    try {
-      const res = await axios.delete(`http://localhost:5000/todos/${todoId}`);
-      // console.log(res);      
-    }
-    catch (err) {
-      console.log(err);
-    }
-    finally {
-      getUser();
-    }
-  }
-
-  const handleChangeDone = async (e, todoId) => {
-    const completed = e.target.checked;
-    try {
-      const res = await axios.put(`http://localhost:5000/todos/${todoId}/completed`, { completed });
-      // console.log(res);
-    }
-    catch (err) {
-      console.log(err);
-    }
-    finally {
-      getUser();
-    }
-  }
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
   return (
     <>
-      {/* <button onClick={getUser}>getUser</button> */}
-      <Grid>
-        <Stack direction="row" spacing={2} sx={{ margin: "10px" }}>
-
-          <TextField id="outlined-basic" label="TodoName" size="small" variant="outlined" sx={{ margin: "10px" }} onChange={(e) => setTodoname(e.target.value)}  value={todoName}/>
-
-          <Button variant="contained" onClick={handleAddNewTodo}> Add</Button>
-
-        </Stack>
-      </Grid>
-      <Grid sx={{ m: "20px" }}>
-
-        <TableContainer component={Paper} sx={{ maxWidth: 800, margin: "auto" }} >
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>S.No</TableCell>
-                <TableCell >Name</TableCell>
-                <TableCell>Completed?</TableCell>
-                <TableCell>Created_At</TableCell>
-                <TableCell >Edit</TableCell>
-                <TableCell >Delete</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {!loading && error === null && rows.length > 0 && rows?.map((row, index) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell >{index + 1}</TableCell>
-                  <TableCell >{row.todoName}</TableCell>
-                  <TableCell >{row.completed ? "Done" : "Not Done"}</TableCell>
-                  <TableCell >{row.created_At}</TableCell>
-                  <TableCell>
-                    <FormGroup>
-                      <FormControlLabel control={<Checkbox
-                        checked={row.completed}
-                        onChange={(e) => { handleChangeDone(e, row.id) }}
-                      />} />
-                    </FormGroup>
-                  </TableCell>
-                  <TableCell ><DeleteOutlineOutlinedIcon className='text-danger cursor-pointer' onClick={() => { handleDelete(row.id) }} /></TableCell>
-                </TableRow>
-              ))}
-              {!loading && error === null && rows.length === 0 &&
-                <TableRow>
-                  <TableCell>
-                    No Record Found
-                  </TableCell>
-                </TableRow>
-              }
-              {loading && error === null &&
-                <TableRow>
-                  <TableCell>
-                    Loading...
-                  </TableCell>
-                </TableRow>
-              }
-              {!loading && error &&
-                <TableRow>
-                  <TableCell>
-                    {error}
-                  </TableCell>
-                </TableRow>
-              }
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-      </Grid>
+     <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={
+        <ProtectedRoute>
+          <Dashboard/>
+        </ProtectedRoute>} />
+      </Routes>
+    </Router>
     </>
   )
 }
