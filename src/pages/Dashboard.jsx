@@ -15,11 +15,10 @@ function Dashboard() {
   const [error, setError] = useState(null);
   const [todoName, setTodoname] = useState("");
   const token = localStorage.getItem("token");
-  const API_URL = process.env.API_URL;
 
   const getUser = async () => {
     try {
-      const res = await axios.get(`${API_URL}/todos`,
+      const res = await axios.get(`https://todoapi-aj2q.onrender.com/todos`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -37,7 +36,7 @@ function Dashboard() {
 
   const addUser = async () => {
     try {
-      const res = await axios.post(`${API_URL}/todos`,
+      const res = await axios.post(`https://todoapi-aj2q.onrender.com/todos`,
         {todoName},
         {
           headers: {
@@ -66,7 +65,7 @@ function Dashboard() {
 
   const handleDelete = async (todoId) => {
     try {
-      const res = await axios.delete(`${API_URL}/todos/${todoId}`,
+      const res = await axios.delete(`https://todoapi-aj2q.onrender.com/todos/${todoId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -86,7 +85,7 @@ function Dashboard() {
   const handleChangeDone = async (e, todoId) => {
     const completed = e.target.checked;
     try {
-      const res = await axios.put(`${API_URL}/todos/${todoId}`, { completed },
+      const res = await axios.put(`https://todoapi-aj2q.onrender.com/todos/${todoId}`, { completed },
         {
           headers: {
             Authorization: `Bearer ${token}`

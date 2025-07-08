@@ -13,12 +13,11 @@ const Login = () => {
 
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const API_URL = process.env.API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${API_URL}/auth/login`, {
+      const res = await axios.post(`https://todoapi-aj2q.onrender.com/auth/login`, {
         userName,
         password
       });
