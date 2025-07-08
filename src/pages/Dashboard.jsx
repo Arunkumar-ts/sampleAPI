@@ -18,7 +18,7 @@ function Dashboard() {
 
   const getUser = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/todos",
+      const res = await axios.get(`${process.env.API_URL}/todos`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -36,7 +36,7 @@ function Dashboard() {
 
   const addUser = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/todos",
+      const res = await axios.post(`${process.env.API_URL}/todos`,
         {todoName},
         {
           headers: {
@@ -66,7 +66,7 @@ function Dashboard() {
 
   const handleDelete = async (todoId) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/todos/${todoId}`,
+      const res = await axios.delete(`${process.env.API_URL}/todos/${todoId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -86,7 +86,7 @@ function Dashboard() {
   const handleChangeDone = async (e, todoId) => {
     const completed = e.target.checked;
     try {
-      const res = await axios.put(`http://localhost:5000/todos/${todoId}`, { completed },
+      const res = await axios.put(`${process.env.API_URL}/todos/${todoId}`, { completed },
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -109,7 +109,6 @@ function Dashboard() {
 
   return (
     <>
-      {/* <button onClick={getUser}>getUser</button> */}
       <Grid sx={{ maxWidth: 800, margin: "auto" }}>
         <Grid sx={{my:"20px"}}>
           <Stack direction="row" spacing={2}>

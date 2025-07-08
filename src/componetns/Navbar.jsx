@@ -5,9 +5,7 @@ const Navbar = () => {
     const location = useLocation();
 
     const token = localStorage.getItem("token");
-    // console.log(token);
-    // console.log(location.pathname);
-    
+
     const handleLogout = () => {
         localStorage.removeItem("token");
         nav("/");

@@ -17,7 +17,7 @@ const Register = () => {
     e.preventDefault();
     if (password === cPassword) {
       try {
-        const res = await axios.post(`http://localhost:5000/auth/register`, {
+        const res = await axios.post(`${process.env.API_URL}/auth/register`, {
           userName,
           password
         });
@@ -27,7 +27,7 @@ const Register = () => {
         setCPassword("");
         nav("/login");
 
-        // localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", res.data.token);
       }
       catch (err) {
         if(err.status == 400){

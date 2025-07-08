@@ -17,11 +17,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:5000/auth/login`, {
+      const res = await axios.post(`${process.env.API_URL}/auth/login`, {
         userName,
         password
       });
-      // console.log(res);
       localStorage.setItem("token", res.data.token);
       setUserName("");
       setPassword("");
