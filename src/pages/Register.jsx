@@ -12,12 +12,14 @@ const Register = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
+  const API_URL = process.env.API_URL;
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === cPassword) {
       try {
-        const res = await axios.post(`${process.env.API_URL}/auth/register`, {
+        const res = await axios.post(`${API_URL}/auth/register`, {
           userName,
           password
         });
