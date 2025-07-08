@@ -7,7 +7,7 @@ const verifyToken = require("./middleware/verifyToken");
 
 const app = express();
 const PORT = 5000;
-
+const allowedOrigins = ['https://todooapi.netlify.app'];
 app.use(cors({
   origin: allowedOrigins,
   credentials: true, 
